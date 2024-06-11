@@ -1,0 +1,114 @@
+.login {
+    background:linear-gradient(to right, #2ff4f76b, #07609c6c),url('../../assets/abstract.jpeg') !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.login-container {
+    background: #ffffff;
+    padding: 20px ;
+    padding-right: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    padding: 50px;
+}
+h1 {
+    margin-bottom: 20px;
+    color: #4a00e0;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333333;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+}
+
+.btn-wrapper{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.activebtn{
+    width: 100%;
+    padding: 10px;
+    background: #4a00e0;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.nonactive{
+    width: 100%;
+    padding: 10px;
+    background: #f5f4f7;
+    color: #ffffff;
+    border: 2px solid #4a00e0;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.login-button:hover {
+    background: #7b2ff7;
+}
+
+.forgot-password {
+    margin-top: 15px;
+}
+
+.forgot-password a {
+    color: #4a00e0;
+    text-decoration: none;
+}
+
+.divider {
+    margin: 20px 0;
+    color: #aaaaaa;
+}
+
+.google-login {
+    width: 100%;
+    padding: 10px;
+    background: #4285f4;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.google-login:hover {
+    background: #357ae8;
+}

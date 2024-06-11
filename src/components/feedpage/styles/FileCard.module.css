@@ -1,0 +1,38 @@
+/* FileCard.module.css */
+.fileCard {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .description {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .downloadButton,
+  .emailButton {
+    padding: 10px 15px;
+    margin-right: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .downloadButton {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .emailButton {
+    background-color: #2196f3;
+    color: white;
+  }
+  

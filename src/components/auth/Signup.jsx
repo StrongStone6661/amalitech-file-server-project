@@ -23,6 +23,7 @@ const Signup = () => {
 
         try {
             const response = await axios.post('http://localhost:3001/api/signup', {
+                username,
                 email,
                 password,
             });

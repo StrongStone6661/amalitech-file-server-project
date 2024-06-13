@@ -6,19 +6,13 @@ const Customers = require('../model/Customers')
 require('../config/db')
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
-const nodemailer = require('nodemailer')
+const jwt = require('jsonwebtoken');
 const sendverificationemail = require('../emails/sendVerificationEmail');
 const resetpassword = require('../emails/resetPassword');
 require('dotenv').config()
 
 
 ////////////////////////////////////
-
-router.get('/users',(req,res)=>{
-    res.send('Hello from the users route')
-})
-
-
 router.post('/signup', async (req, res) => {
         const { username, email, password } = req.body;
 
@@ -45,11 +39,11 @@ router.post('/signup', async (req, res) => {
         }else{
             await newCustomer.save()
             .then(() => {
-                res.json({ message: 'Check your email for verification' });
+                res.status(200).json({ message: 'Check your email for verification' });
                 sendverificationemail(email,token)
             })
             .catch((err) => {
-                res.json({ message: 'An error Occurred' });
+                res.status(400).json({ message: 'An error Occurred' });
             });
         }   
     } catch (error) {
@@ -66,7 +60,7 @@ router.get('/verify/:token',async (req,res)=>{
         })
 
         if(!user){
-            return res.send('Verification link is expired or incorrect')
+            return res.status(400).send('Verification link is expired or incorrect')
         }
 
         user.isVerified = true;
@@ -79,7 +73,7 @@ router.get('/verify/:token',async (req,res)=>{
         
 
     }catch(err){
-        console.log(err)
+        res.status(400).send(err)
     }
 })
 
@@ -89,23 +83,22 @@ router.post('/login', async (req, res) => {
         //check if user exists
         const customer = await Customers.findOne({email})
         if(!customer){
-            res.json({message:'User does not exist please register'})
+            res.status(400).json({message:'User does not exist please register'})
         }else{
             if(customer.isVerified === true){
                 const isMatch = await bcrypt.compare(password,customer.password)
                 if(isMatch){
-    
-                    res.json({message:'Signin Successful'})
+                    const token = jwt.sign({ id: customer._id, email: customer.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                    res.status(200).json({ message: 'Signin Successful', token });
                 }else{
-                    res.json({message:'Invalid Credentials,wrong password'})
+                    res.status(400).json({message:'Invalid Credentials,wrong password'})
                 }
             }else{
-                res.json({message:'User is not verified,please verify your email'})
-            }
-            
+                res.status(400).json({message:'User is not verified,please verify your email'})
+            } 
         }  
     }catch(err){
-        console.log(err)
+        res.status(400).send(err)
     }
 })
 
@@ -115,7 +108,7 @@ router.post('/forget-password', async (req, res)=>{
         const token = crypto.randomBytes(8).toString('hex')
         const user = await Customers.findOne({email})
         if(!user){
-            res.json({message:'User does not exist the our database, make sure you register'})
+            res.status(400).json({message:'User does not exist the our database, make sure you register'})
         }
 
         user.forgotPasswordToken = token;
@@ -124,13 +117,13 @@ router.post('/forget-password', async (req, res)=>{
         await user.save()
         .then(()=>{
             resetpassword(email,token)
-            res.json({message:'Please check your email for the reset link'})
+            res.status(200).json({message:'Please check your email for the reset link'})
         }).catch((err)=>{
-            res.json({message:'Something went wrong',err})
+            res.status(400).json({message:'Something went wrong',err})
         })
 
     }catch(err){
-        res.json({message:'Something went wrong'})
+        res.status(400).json({message:'Something went wrong'})
     }
 })
 
@@ -139,7 +132,7 @@ router.post('/forget-password', async (req, res)=>{
 router.post('/reset-password/:token', async (req, res) => {
     const { token } = req.params;
   const { password } = req.body; 
-  console.log(password)
+  
     try {
       const user = await Customers.findOne({
         forgotPasswordToken:token,
@@ -157,7 +150,7 @@ router.post('/reset-password/:token', async (req, res) => {
         { new: true }
       );
       if(newpassword){
-        res.json({message:'Password reset successful'})
+        res.status(200).json({message:'Password reset successful'})
       }
       
      

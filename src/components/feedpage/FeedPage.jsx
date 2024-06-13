@@ -5,19 +5,31 @@ import styles from './styles/FeedPage.module.css';
 import styles2 from './styles/FileCard.module.css';
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom';
 
 const FeedPage = () => {
+  const navigate = useNavigate()
   const [files, setFiles] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [theemail,setEmail] = useState('')
+
 
   useEffect(() => {
     fetchFiles();
   }, []);
 
   const fetchFiles = async () => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      Swal.fire('Error', 'You are not authorized. Please login.', 'error');
+      navigate('/');
+      return;
+    }
     try {
-      const response = await axios.get('http://localhost:3001/api/data/allfiles');
+      const response = await axios.get('http://localhost:3001/api/data/allfiles',{
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      });
       if (response.data) {
         setFiles(response.data);
       }
@@ -42,9 +54,18 @@ const FeedPage = () => {
       inputPlaceholder: "Enter your email address"
     });
     if (email) {
-           /*Swal.fire(`Entered email: ${email}`); */
+        const token = localStorage.getItem('token');
+      if (!token) {
+        Swal.fire('Error', 'You are not authorized. Please login.', 'error')
+        navigate('/')
+        return;
+      }
       try{
-        const response = await axios.post(`http://localhost:3001/email/sendemail/${filename}?id=${id}`,{email:email})
+        const response = await axios.post(`http://localhost:3001/email/sendemail/${filename}?id=${id}`,{email:email},{
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        })
         if(response){
           Swal.fire('File sent to your email')
         }
@@ -55,10 +76,19 @@ const FeedPage = () => {
   };
 
   const handleDownload = (filename,id) => {
+    const token = localStorage.getItem('token');
+      if (!token) {
+        Swal.fire('Error', 'You are not authorized. Please login.', 'error');
+        navigate('/login');
+        return;
+      }
     axios({
       url: `http://localhost:3001/api/download/${filename}?id=${id}`,
       method: 'GET',
       responseType: 'blob',
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
     }).then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
@@ -70,9 +100,18 @@ const FeedPage = () => {
     }).catch(error => console.error('Error downloading file:', error));
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token'); 
+    navigate('/'); // Redirect to the login page
+  };
+
   return (
     <div className={styles.feedPage}>
+      <div style={{display:'flex',width:'100%',justifyContent:'space-around',alignItem:'center',backgroundColor:'#1B1A55',padding:'10px'}}>
       <SearchBar onSearch={handleSearch} />
+      <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+      </div>
+      
       <div className={styles.fileList}>
         {filteredFiles.map(file => (
           <div key={file.id} className={styles2.fileCard}>

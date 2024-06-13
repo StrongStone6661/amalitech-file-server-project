@@ -3,10 +3,11 @@ const router = express.Router()
 const File = require('../model/File')
 require('dotenv').config()
 require('../config/db')
+const authenticateToken = require('../middleware/auth')
 
 
 
-router.get('/allfiles',async (req,res)=>{
+router.get('/allfiles',authenticateToken,async (req,res)=>{
     try{
         const allfiles = await File.find({})
         if(!allfiles){

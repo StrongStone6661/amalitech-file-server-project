@@ -32,8 +32,9 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/document-distribution-platform.git
-   cd document-distribution-platform
+   git clone https://github.com/StrongStone6661/amalitech-file-server-project.git
+   
+   cd amalitech-file-server-project
    ```
 
 2. Install dependencies:
@@ -59,7 +60,7 @@ npx nodemon server.js
 
 ### Accessing the application
 
-The server will be running on `http://localhost:3000`.
+The server will be running on `http://localhost:3001`.
 
 ## API Endpoints
 

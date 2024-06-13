@@ -36,9 +36,9 @@ const Signup = () => {
     return (
         <div className='login'>
         <div className="login-container">
-            <h1>Welcome</h1>
+            
             <form onSubmit={handleSubmit}>
-            <p style={{ margin: '0px' }}>Register</p>
+            <h1>Welcome</h1>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className="input-group">
                 <label htmlFor="email">Username</label>

@@ -35,43 +35,44 @@ const Login = () => {
   };
 
   return (
-    <div className='login'>
-      <div className="login-container">
-        <h1>Welcome</h1>
-        <form onSubmit={handleSubmit}>
-          <p style={{ margin: '0px' }}>Login</p>
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required 
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input 
-              type="password" 
-              id="password" 
-              name="password" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required 
-            />
-          </div>
-          <div className='btn-wrapper'>
-            <button type="submit" className="activebtn">Login</button>
-            <button type="button" className="nonactive" onClick={() => navigate('/signup')}>Sign up</button>
-          </div> 
-          <div className="forgot-password">
-            <a onClick={() => navigate('/password-forget')}>Forgot your Password?</a>
-          </div>
-        </form>
+<div className="login">
+  <div className="login-container">
+    
+    <form onSubmit={handleSubmit}>
+    <h1>LOGIN</h1>
+      <div className="input-group">
+        <label htmlFor="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required 
+        />
       </div>
-    </div>
+      <div className="input-group">
+        <label htmlFor="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required 
+        />
+      </div>
+      <div className="btn-wrapper">
+        <button type="submit" className="activebtn">Login</button>
+        <button type="button" className="nonactive" onClick={() => navigate('/signup')}>Sign up</button>
+      </div>
+      <div className="forgot-password">
+        <a onClick={() => navigate('/password-forget')}>Forgot your Password?</a>
+      </div>
+    </form>
+  </div>
+</div>
+
   );
 };
 

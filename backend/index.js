@@ -8,6 +8,7 @@ const data = require('./apiroutes/Data')
 const downloadfile = require('./apiroutes/Download')
 const sendFileEmail = require('./apiroutes/SendFileEmail')
 const manageFiles = require('./apiroutes/ManageFiles')
+const admin = require('./apiroutes/AuthAdmin')
 
 require('dotenv').config()
 const cors = require('cors')
@@ -21,6 +22,8 @@ app.use('/api/data',data)
 app.use('/api',downloadfile)
 app.use('/email',sendFileEmail)
 app.use('/manage',manageFiles)
+app.use('/admin',admin)
+
 
 
 

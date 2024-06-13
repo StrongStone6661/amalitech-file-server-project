@@ -13,9 +13,19 @@ const Forgotpassword = () => {
   };
 
   const handleSubmit =async(e) => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      Swal.fire('Error', 'You are not authorized. Please login.', 'error');
+      navigate('/');
+      return;
+    }
     e.preventDefault();
     try{
-        const response = await axios.post('http://localhost:3001/api/forget-password',{email})
+        const response = await axios.post('http://localhost:3001/api/forget-password',{email},{
+          headers:{
+            Authorization: `Bearer ${token}`
+          }
+        })
         if(response.status === 200){
           Swal.fire("Check your email for the reset link!")  
         }

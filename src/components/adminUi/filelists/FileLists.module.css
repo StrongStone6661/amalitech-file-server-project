@@ -3,11 +3,49 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
+    width: 50%;
     height:100vh;
     overflow-y:scroll ;
   }
-  
+  .fileList {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.fileList::-webkit-scrollbar {
+    width: 8px; /* Adjust the width of the scrollbar */
+}
+
+.fileList::-webkit-scrollbar-track {
+    background: #f9f9f9; /* Color of the track */
+    border-radius: 8px;
+}
+
+.fileList::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 8px;
+}
+
+.fileList::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color of the thumb when hovered */
+}
+
+/* Hide scrollbar */
+.fileList {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.fileList::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+
   .fileItem {
     margin-bottom: 15px;
     background: white;

@@ -9,6 +9,16 @@ const FileUploads = () => {
   const [file, setFile] = useState(null);
 
   const handleSubmit = async (e) => {
+    const token = localStorage.getItem('token');
+    if(!token){
+      Swal.fire({
+        icon: 'error',
+        title: 'Login Required',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      return;
+    }
     e.preventDefault();
     const formData = new FormData();
     try{
@@ -16,7 +26,11 @@ const FileUploads = () => {
       formData.append('description', description)
       formData.append('file',file)
 
-      const upload = await axios.post('http://localhost:3001/upload/singlefile',formData)
+      const upload = await axios.post('http://localhost:3001/upload/singlefile',formData,{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      })
       if(upload.data.message == 'success'){
         Swal.fire({
           icon: 'success',
@@ -68,7 +82,7 @@ const FileUploads = () => {
           required 
         />
       </div>
-      <button type="submit" className={styles.uploadButton}>Upload</button>
+      <button type="submit" className={styles.upbtn}>Upload</button>
     </form>
   );
 };

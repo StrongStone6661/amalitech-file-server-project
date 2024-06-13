@@ -4,7 +4,8 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    width: 60%;
+    width: 35%;
+    height: fit-content;
   }
   
   .formGroup {
@@ -26,16 +27,17 @@
     border-radius: 4px;
   }
   
-  .uploadButton {
-    background-color: #4caf50;
+  .upbtn {
+    background-color: #45a049;
     color: white;
-    padding: 10px 20px;
+   
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    
   }
   
-  .uploadButton:hover {
-    background-color: #45a049;
+  .upbtn:hover {
+    background-color: #c1cc20 ;
   }
   

@@ -4,31 +4,26 @@ import styles from './FileLists.module.css';
 import axios from 'axios'
 import d_image from '../../../assets/download.png'
 import d_email from '../../../assets/email.png'
+import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom';
 
 
-const FileList = () => {
-  const [files,setFiles] = useState([])
-
-  const fetchFiles = async () => {
-    try {
-      const response = await axios.get('http://localhost:3001/api/data/allfiles');
-      if (response.data) {
-        setFiles(response.data);
-      }
-    } catch (error) {
-      console.error('Error fetching files:', error);
-    }
-  };
-  useEffect(()=>{
-    
-
-    fetchFiles();
-
-  },[])
+const FileList = ({files,fetchFiles}) => {
+ const navigate = useNavigate()
 
   const handleDelete = async (id)=>{
+    const token = localStorage.getItem('token')
+    if (!token) {
+      Swal.fire('Error', 'You are not authorized. Please login.', 'error');
+      navigate('/admin-login');
+      return;
+    }
     try{
-      const response = await axios.get(`http://localhost:3001/manage/delete/${id}`)
+      const response = await axios.get(`http://localhost:3001/manage/delete/${id}`,{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      })
       if(response){
         fetchFiles();
       }

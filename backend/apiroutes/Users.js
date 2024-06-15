@@ -22,21 +22,18 @@ router.post('/signup', async (req, res) => {
 
     try {
         
-
-        const newCustomer = new Customers({
-            username,
-            email,
-            password:hashedpassword,
-            verificationToken:token,
-            verificationTokenExpires:Date.now()+ 3600000   
-        });
-
-
         const user = await Customers.findOne({email})
 
         if(user){
             res.json({ message: 'User already exists'})   
         }else{
+            const newCustomer = new Customers({
+                username,
+                email,
+                password:hashedpassword,
+                verificationToken:token,
+                verificationTokenExpires:Date.now() + 3600000   
+            });
             await newCustomer.save()
             .then(() => {
                 res.status(200).json({ message: 'Check your email for verification' });
@@ -54,22 +51,25 @@ router.post('/signup', async (req, res) => {
 
 router.get('/verify/:token',async (req,res)=>{
     try{
+        //check if customer exist in the db with accurate assigned Vtoken and VtokenExpires
         const user = await Customers.findOne({
             verificationToken: req.params.token,
-            verificationTokenExpires: {$gt:Date.now()}
+            verificationTokenExpires: {$gt:Date.now()} //is the Vtoken greater than date now?
         })
 
+        //check if user was found with the stated attributes.
         if(!user){
             return res.status(400).send('Verification link is expired or incorrect')
         }
 
-        user.isVerified = true;
+        //resetting the Token and Expiry
+        user.isVerified = true; //Set verify true
         user.verificationToken = undefined;
         user.verificationTokenExpires = undefined;
 
-        await user.save()
+        await user.save() //save the update
 
-        res.redirect('http://localhost:5173');
+        res.redirect('http://localhost:5173/');
         
 
     }catch(err){
@@ -77,11 +77,13 @@ router.get('/verify/:token',async (req,res)=>{
     }
 })
 
+//the login route. 
 router.post('/login', async (req, res) => {
   try{
+        //the requested user data from the frontend
         const {email,password} = req.body;
         //check if user exists
-        const customer = await Customers.findOne({email})
+        const customer = await Customers.findOne({email}) 
         if(!customer){
             res.status(400).json({message:'User does not exist please register'})
         }else{

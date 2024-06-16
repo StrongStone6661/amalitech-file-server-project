@@ -179,9 +179,9 @@ Create a `.env` file in the root directory with the following variables:
 ```plaintext
 MONGODB_URI=mongodb://localhost:27017/mydatabase
 PORT=3001
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-email-password
-JWT_SECRET=your--secret-jwt
+EMAIL_USER=your-email@gmail.com (gmail)
+EMAIL_PASS=your-email-password (gmail)
+JWT_SECRET=your-secret-jwt
 ```
 
 ## Frontend

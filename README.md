@@ -1,10 +1,4 @@
-# Amalitech File Server Project
-
-Here's a README template for the  File Server Project:
-
----
-
-# Document Distribution Platform
+# Document Distribution Platform - Amalitech Project
 
 A Node.js and Express-based platform for distributing documents such as wedding cards, admission forms, and more. The platform allows users to sign up, log in, view and search for downloadable files, and send files via email. Admins can upload files and view statistics on downloads and email sends.
 
@@ -16,12 +10,13 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 - [API Endpoints](#api-endpoints)
 - [Models](#models)
 - [Environment Variables](#environment-variables)
+- [Frontend](#frontend)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Features
 
-- User authentication: Signup, login, password reset, and email verification
+- User authentication: Signup, login, password reset
 - View and search downloadable files
 - Send files via email
 - Admin functionalities:
@@ -30,11 +25,12 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 
 ## Installation
 
+### Backend
+
 1. Clone the repository:
    ```sh
-   git clone https://github.com/StrongStone6661/amalitech-file-server-project.git
-   
-   cd amalitech-file-server-project
+   git clone https://github.com/yourusername/document-distribution-platform.git
+   cd document-distribution-platform
    ```
 
 2. Install dependencies:
@@ -49,6 +45,23 @@ A Node.js and Express-based platform for distributing documents such as wedding 
    npm start
    ```
 
+### Frontend
+
+1. Navigate to the `frontend` directory:
+   ```sh
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+
+3. Start the development server:
+   ```sh
+   npm run dev
+   ```
+
 ## Usage
 
 ### Running the server
@@ -60,9 +73,37 @@ npx nodemon server.js
 
 ### Accessing the application
 
-The server will be running on `http://localhost:3001`.
+The backend server will be running on `http://localhost:3001` and the frontend development server will be running on `http://localhost:5173`.
 
 ## API Endpoints
+
+### Admin Routes
+
+  - **POST** `/admin/signup`
+    - Description: Create a new user : **Note** : This route does not have a frontend route
+    - Body:
+      ```json
+      {
+        "name": "Admin Name",
+        "email": "admin@example.com",
+        "password": "password123"
+      }
+      ```
+  - **POST** `/admin/login`
+    - Description: Admin login with only password : **Note** : This route does have a frontend page
+    - Body:
+      ```json
+      {
+        "password": "Admin Password",
+      }
+      ```
+
+  - **POST** `/admin/upload`
+    - Description: Admin route to upload files (requires authentication)
+    - Body: Multipart/form-data with fields `title`, `description`, and `file`
+
+  - **GET** `/api/data/allfiles`
+    - Description: this route gets all the uploaded files with it stats
 
 ### User Routes
 
@@ -77,12 +118,9 @@ The server will be running on `http://localhost:3001`.
     }
     ```
 
-- **GET** `/users`
-  - Description: Get all users
-
 ### File Routes
 
-- **POST** `/files`
+- **POST** `/upload/singlefile`
   - Description: Upload a new file
   - Body:
     ```json
@@ -93,29 +131,32 @@ The server will be running on `http://localhost:3001`.
     }
     ```
 
-- **GET** `/files`
+- **GET** `/api/data/allfiles`
   - Description: Get all files
 
-- **POST** `/send-file`
+- **POST** `/email/sendemail/:filename`
   - Description: Send a file to an email
   - Body:
     ```json
     {
       "email": "recipient@example.com",
-      "fileId": "60d21b4967d0d8992e610c85"
+      "filename": "60d21b4967d0d8992e610c85"
     }
     ```
+- **GET** `/manage/delete/:id`
+  - Description: Delete a an uploaded file
 
-### Admin Routes
+- **GET** `/api/download/:filename`
+  - Description: Allow the user to download a file
 
-- **POST** `/admin/upload`
-  - Description: Admin route to upload files (requires authentication)
-  - Body: Multipart/form-data with fields `title`, `description`, and `file`
-
-- **GET** `/admin/stats`
-  - Description: Get statistics about downloads and emails sent (requires authentication)
 
 ## Models
+
+### Admin Model
+- `name`: String, required
+- `email`: String, required, unique
+- `password`: String, required
+
 
 ### User Model
 
@@ -137,10 +178,38 @@ Create a `.env` file in the root directory with the following variables:
 
 ```plaintext
 MONGODB_URI=mongodb://localhost:27017/mydatabase
-PORT=3000
+PORT=3001
 EMAIL_USER=your-email@gmail.com
 EMAIL_PASS=your-email-password
+JWT_SECRET=your--secret-jwt
 ```
+
+## Frontend
+
+### Routes
+
+- `/`: Login
+- `/signup`: Signup
+- `/password-forget`: Forgot Password
+- `/reset-password/:token`: Reset Password
+- `/admin-login`: Admin Login
+- `/admin`: Admin Dashboard
+- `/feedpage`: Feed Page 
+
+### Setup
+
+1. Navigate to the `frontend` directory and install dependencies:
+   ```sh
+   cd frontend
+   npm install
+   ```
+
+2. Start the Vite development server:
+   ```sh
+   npm run dev
+   ```
+
+The frontend will be running on `http://localhost:5173`.
 
 ## Contributing
 
@@ -158,5 +227,3 @@ Contributions are welcome! Please follow these steps:
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
-
-Feel free to customize the README as needed for your specific project. This template provides a clear and organized structure that follows common GitHub conventions.

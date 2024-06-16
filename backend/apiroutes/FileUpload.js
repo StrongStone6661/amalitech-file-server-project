@@ -24,19 +24,25 @@ const uploadStorage = multer({ storage: storage })
 // Single file
 router.post("/singlefile", uploadStorage.single("file"), (req, res) => {
   
+  // Get the title and description from the request body
   const {title,description} = req.body
-  const thefile = req.file
 
+  const thefile = req.file  // Get the file from the request
+
+  // Create a new File 
   const file = new File({
     title,
     description,
     filePath: thefile.filename
   })
+  
   file.save()
 
+  //return a success message
   if(file){
     return res.status(200).json({message: "success"})
   }else{
+    //return a failed upload message
     res.json({message:'failed to upload'})
   }
 })

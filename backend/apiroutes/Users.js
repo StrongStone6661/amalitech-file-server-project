@@ -14,19 +14,23 @@ require('dotenv').config()
 
 ////////////////////////////////////
 router.post('/signup', async (req, res) => {
-        const { username, email, password } = req.body;
+        const { username, email, password } = req.body; //extract data from frontend
 
+            //hash password
         const hashedpassword = await bcrypt.hash(password, 10);
 
+        //create verification token
         const token = crypto.randomBytes(16).toString('hex');
 
     try {
-        
+        //check if user exist in the db
         const user = await Customers.findOne({email})
 
+        //if user exist, return error
         if(user){
             res.json({ message: 'User already exists'})   
         }else{
+            //create new user
             const newCustomer = new Customers({
                 username,
                 email,
@@ -36,6 +40,7 @@ router.post('/signup', async (req, res) => {
             });
             await newCustomer.save()
             .then(() => {
+                //send verification email
                 res.status(200).json({ message: 'Check your email for verification' });
                 sendverificationemail(email,token)
             })
@@ -108,18 +113,23 @@ router.post('/login', async (req, res) => {
 
 router.post('/forget-password', async (req, res)=>{
     try{
-        const email =req.body.email
-        const token = crypto.randomBytes(8).toString('hex')
-        const user = await Customers.findOne({email})
+        const email =req.body.email //request from the  frontend
+        const token = crypto.randomBytes(8).toString('hex') //create a token
+        const user = await Customers.findOne({email}) //find the user 
+        
+        //check if user exist in the mongodb database
         if(!user){
             res.status(400).json({message:'User does not exist the our database, make sure you register'})
         }
 
+        //if user exist,create a token and save it in the database
         user.forgotPasswordToken = token;
         user.forgotPasswordExpires = Date.now() + 3600000 
         
+        //save the token in the database
         await user.save()
         .then(()=>{
+            //send the token to the user's email
             resetpassword(email,token)
             res.status(200).json({message:'Please check your email for the reset link'})
         }).catch((err)=>{
@@ -134,15 +144,18 @@ router.post('/forget-password', async (req, res)=>{
 
 
 router.post('/reset-password/:token', async (req, res) => {
-    const { token } = req.params;
-  const { password } = req.body; 
+    const { token } = req.params; //extract params
+  const { password } = req.body; //extract password
   
     try {
+        
+      // Find the user based on the token
       const user = await Customers.findOne({
         forgotPasswordToken:token,
         forgotPasswordExpires: {$gt: Date.now()}, 
       });
-  
+      
+      // If the user is found, update the password and clear the reset token
       if (!user) {
         return res.status(400).send('Password reset token is invalid or has expired.');
       }

@@ -69,7 +69,7 @@ router.get('/verify/:token',async (req,res)=>{
 
         await user.save() //save the update
 
-        res.redirect('http://localhost:5173/');
+        res.redirect('http://localhost:5173/');// Redirect the user to the homepage
         
 
     }catch(err){
@@ -80,7 +80,7 @@ router.get('/verify/:token',async (req,res)=>{
 //the login route. 
 router.post('/login', async (req, res) => {
   try{
-        //the requested user data from the frontend
+        // Extract the email and password from the request body
         const {email,password} = req.body;
         //check if user exists
         const customer = await Customers.findOne({email}) 
@@ -88,8 +88,10 @@ router.post('/login', async (req, res) => {
             res.status(400).json({message:'User does not exist please register'})
         }else{
             if(customer.isVerified === true){
+                // If the user exists and is verified, compare the provided password with the stored password
                 const isMatch = await bcrypt.compare(password,customer.password)
                 if(isMatch){
+                    // If the passwords match, generate a JSON Web Token
                     const token = jwt.sign({ id: customer._id, email: customer.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
                     res.status(200).json({ message: 'Signin Successful', token });
                 }else{

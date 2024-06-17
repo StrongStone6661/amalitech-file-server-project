@@ -30,7 +30,7 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 1. Clone the repository:
    ```sh
    git clone https://github.com/StrongStone6661/amalitech-file-server-project.git
-   cd amalitech-file-server-project
+   cd amalitech-file-server-project/backend
    ```
 
 2. Install dependencies:
@@ -47,9 +47,9 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 
 ### Frontend
 
-1. Navigate to the `frontend` directory:
+1. Navigate to the `main` directory:
    ```sh
-   cd frontend
+   cd amalitech-file-server-project
    ```
 
 2. Install dependencies:
@@ -68,7 +68,7 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 
 To run the server in development mode with automatic restarts, use:
 ```sh
-npx nodemon server.js
+npx nodemon index.js
 ```
 
 ### Accessing the application
@@ -177,7 +177,7 @@ The backend server will be running on `http://localhost:3001` and the frontend d
 Create a `.env` file in the root directory with the following variables:
 
 ```plaintext
-MONGODB_URI=mongodb://localhost:27017/mydatabase
+MONGODB_URI=mongodb://localhost:27017/mydatabase or atlas link
 PORT=3001
 EMAIL_USER=your-email@gmail.com (gmail)
 EMAIL_PASS=your-email-password (gmail)
@@ -198,9 +198,9 @@ JWT_SECRET=your-secret-jwt
 
 ### Setup
 
-1. Navigate to the `frontend` directory and install dependencies:
+1. Navigate to the `main` directory and install dependencies:
    ```sh
-   cd frontend
+   cd amalitech-file-server-project
    npm install
    ```
 

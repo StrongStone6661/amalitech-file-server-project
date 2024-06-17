@@ -81,6 +81,7 @@ The backend server will be running on `http://localhost:3001` and the frontend d
 
   - **POST** `/admin/signup`
     - Description: Create a new user : **Note** : This route does not have a frontend route
+    - **How to setup admin:** Run this route using tools like Postman and setup an admin since this route doesn't have a frontend
     - Body:
       ```json
       {
@@ -90,7 +91,7 @@ The backend server will be running on `http://localhost:3001` and the frontend d
       }
       ```
   - **POST** `/admin/login`
-    - Description: Admin login with only password : **Note** : This route does have a frontend page
+    - Description: Admin login with only password
     - Body:
       ```json
       {

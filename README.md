@@ -16,7 +16,7 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 
 ## Features
 
-- User authentication: Signup, login, password reset
+- User authentication: Signup, login, password reset and verification
 - View and search downloadable files
 - Send files via email
 - Admin functionalities:
@@ -29,8 +29,8 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/document-distribution-platform.git
-   cd document-distribution-platform
+   git clone https://github.com/StrongStone6661/amalitech-file-server-project.git
+   cd amalitech-file-server-project
    ```
 
 2. Install dependencies:

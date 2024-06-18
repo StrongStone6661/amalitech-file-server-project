@@ -81,7 +81,7 @@ The backend server will be running on `http://localhost:3001` and the frontend d
 
   - **POST** `/admin/signup`
     - Description: Create a new user : **Note** : This route does not have a frontend route
-    - **How to setup admin:** Run this route using tools like Postman and setup an admin since this route doesn't have a frontend
+    - **How to setup admin:** Run this route using tools like Postman and setup an admin since this route doesn't have a frontend. Therefore to setup the admin, You must use tool like ***Postman, thunderclient***.
     - Body:
       ```json
       {

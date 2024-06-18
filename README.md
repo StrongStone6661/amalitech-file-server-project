@@ -103,7 +103,7 @@ The backend server will be running on `http://localhost:3001` and the frontend d
     - Description: Admin route to upload files (requires authentication)
     - Body: Multipart/form-data with fields `title`, `description`, and `file`
 
-  - **GET** `/api/data/allfiles`
+  - **GET** `/api/data/allfilesuploaded`
     - Description: this route gets all the uploaded files with it stats
 
 ### User Routes
@@ -183,6 +183,7 @@ PORT=3001
 EMAIL_USER=your-email@gmail.com (gmail)
 EMAIL_PASS=your-email-password (gmail)
 JWT_SECRET=your-secret-jwt
+ADMIN_JWT_SECRET=your-secret-jwt
 ```
 
 ## Frontend

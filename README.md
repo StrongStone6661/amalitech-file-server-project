@@ -16,7 +16,7 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 
 ## Features
 
-- User authentication: Signup, login, password reset
+- User authentication: Signup, login, password reset and verification
 - View and search downloadable files
 - Send files via email
 - Admin functionalities:
@@ -29,8 +29,8 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/document-distribution-platform.git
-   cd document-distribution-platform
+   git clone https://github.com/StrongStone6661/amalitech-file-server-project.git
+   cd amalitech-file-server-project/backend
    ```
 
 2. Install dependencies:
@@ -47,9 +47,9 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 
 ### Frontend
 
-1. Navigate to the `frontend` directory:
+1. Navigate to the `main` directory:
    ```sh
-   cd frontend
+   cd amalitech-file-server-project
    ```
 
 2. Install dependencies:
@@ -68,7 +68,7 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 
 To run the server in development mode with automatic restarts, use:
 ```sh
-npx nodemon server.js
+npx nodemon index.js
 ```
 
 ### Accessing the application
@@ -81,6 +81,7 @@ The backend server will be running on `http://localhost:3001` and the frontend d
 
   - **POST** `/admin/signup`
     - Description: Create a new user : **Note** : This route does not have a frontend route
+    - **How to setup admin:** Run this route using tools like Postman and setup an admin since this route doesn't have a frontend
     - Body:
       ```json
       {
@@ -90,7 +91,7 @@ The backend server will be running on `http://localhost:3001` and the frontend d
       }
       ```
   - **POST** `/admin/login`
-    - Description: Admin login with only password : **Note** : This route does have a frontend page
+    - Description: Admin login with only password
     - Body:
       ```json
       {
@@ -102,7 +103,7 @@ The backend server will be running on `http://localhost:3001` and the frontend d
     - Description: Admin route to upload files (requires authentication)
     - Body: Multipart/form-data with fields `title`, `description`, and `file`
 
-  - **GET** `/api/data/allfiles`
+  - **GET** `/api/data/allfilesuploaded`
     - Description: this route gets all the uploaded files with it stats
 
 ### User Routes
@@ -177,11 +178,12 @@ The backend server will be running on `http://localhost:3001` and the frontend d
 Create a `.env` file in the root directory with the following variables:
 
 ```plaintext
-MONGODB_URI=mongodb://localhost:27017/mydatabase
+MONGODB_URI=mongodb://localhost:27017/mydatabase or atlas link
 PORT=3001
 EMAIL_USER=your-email@gmail.com (gmail)
 EMAIL_PASS=your-email-password (gmail)
 JWT_SECRET=your-secret-jwt
+ADMIN_JWT_SECRET=your-secret-jwt
 ```
 
 ## Frontend
@@ -198,9 +200,9 @@ JWT_SECRET=your-secret-jwt
 
 ### Setup
 
-1. Navigate to the `frontend` directory and install dependencies:
+1. Navigate to the `main` directory and install dependencies:
    ```sh
-   cd frontend
+   cd amalitech-file-server-project
    npm install
    ```
 

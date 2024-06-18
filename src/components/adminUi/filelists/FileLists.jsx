@@ -32,9 +32,15 @@ const FileList = ({files,fetchFiles}) => {
     }
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('admintoken'); 
+    navigate('/admin-login'); // Redirect to the login page
+  };
+
   return (
     <div className={styles.fileList}>
-      <h2>Uploaded Files</h2>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',gap:'155px'}}><h2>Uploaded Files</h2><button style={{height:'7vh',color:'white',backgroundColor:'red',border:'none'}} onClick={handleLogout}>logout</button></div>
+
       <ul>
         {files.map((file, index) => (
           <li key={index} className={styles.fileItem}>

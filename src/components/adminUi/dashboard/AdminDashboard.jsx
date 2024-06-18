@@ -33,15 +33,12 @@ const AdminDashboard = () => {
     }
   };
   useEffect(()=>{
-    
-    fetchFiles();
-
+        fetchFiles();
   },[])
   return (
     <div className={styles.adminDashboard}>
-      <FileUpload />
-      {/* <FileStats /> */}
-      <FileList files={files} fetchFiles={fetchFiles}/>
+        <FileUpload />
+        <FileList files={files} fetchFiles={fetchFiles}/>
     </div>
   );
 }

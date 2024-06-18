@@ -20,11 +20,11 @@ const AdminAuth = () => {
     
         } catch (err) {
           if (err.response) {  
-            Swal.fire(err.response.data.message);
+            Swal.fire(err.response.data.msg);
           } else if (err.request) {
             Swal.fire('No response received from server');
           } else {
-            Swal.fire('Error', err.message, 'error');
+            Swal.fire('Error', err.msg, 'error');
           }
         }
       };

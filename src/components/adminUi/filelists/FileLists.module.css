@@ -1,18 +1,10 @@
-.fileList {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 50%;
-    height:100vh;
-    overflow-y:scroll ;
-  }
+
   .fileList {
-    background-color: #f9f9f9;
+    background-color: #ffffff7e;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 50%;
+    width: 45%;
     height: 100vh;
     overflow-y: scroll;
 }

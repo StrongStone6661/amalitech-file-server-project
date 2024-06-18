@@ -14,9 +14,12 @@ require('dotenv').config()
 
 ////////////////////////////////////
 router.post('/signup', async (req, res) => {
-        const { username, email, password } = req.body; //extract data from frontend
+        
+       const username = req.body.username.trim();
+       const email = req.body.email.trim().toLowerCase();
+       const password = req.body.password.trim();
 
-            //hash password
+        //hash password
         const hashedpassword = await bcrypt.hash(password, 10);
 
         //create verification token
@@ -75,8 +78,6 @@ router.get('/verify/:token',async (req,res)=>{
         await user.save() //save the update
 
         res.redirect('http://localhost:5173/');// Redirect the user to the homepage
-        
-
     }catch(err){
         res.status(400).send(err)
     }
@@ -86,7 +87,8 @@ router.get('/verify/:token',async (req,res)=>{
 router.post('/login', async (req, res) => {
   try{
         // Extract the email and password from the request body
-        const {email,password} = req.body;
+        const password = req.body.password.trim();
+        const email = req.body.email.toLowerCase();
         //check if user exists
         const customer = await Customers.findOne({email}) 
         if(!customer){
@@ -111,35 +113,32 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.post('/forget-password', async (req, res)=>{
-    try{
-        const email =req.body.email //request from the  frontend
-        const token = crypto.randomBytes(8).toString('hex') //create a token
-        const user = await Customers.findOne({email}) //find the user 
-        
-        //check if user exist in the mongodb database
-        if(!user){
-            res.status(400).json({message:'User does not exist the our database, make sure you register'})
-        }
-
-        //if user exist,create a token and save it in the database
-        user.forgotPasswordToken = token;
-        user.forgotPasswordExpires = Date.now() + 3600000 
-        
-        //save the token in the database
-        await user.save()
-        .then(()=>{
-            //send the token to the user's email
-            resetpassword(email,token)
-            res.status(200).json({message:'Please check your email for the reset link'})
-        }).catch((err)=>{
-            res.status(400).json({message:'Something went wrong',err})
+router.post('/forget-password', async (req, res) => {
+    try {
+      const email = req.body.email;
+      const token = crypto.randomBytes(8).toString('hex');
+      const user = await Customers.findOne({ email });
+  
+      if (!user) {
+        return res.status(400).json({ message: 'User does not exist in our database, make sure you register' }); // Added return here
+      }
+  
+      user.forgotPasswordToken = token;
+      user.forgotPasswordExpires = Date.now() + 3600000;
+  
+      await user.save()
+        .then(() => {
+          resetpassword(email, token);
+          res.status(200).json({ message: 'Please check your email for the reset link' }); // Added return here
         })
-
-    }catch(err){
-        res.status(400).json({message:'Something went wrong'})
+        .catch((err) => {
+          return res.status(400).json({ message: 'Something went wrong', err }); // Added return here
+        });
+    } catch (err) {
+      return res.status(400).json({ message: 'Something went wrong' }); // Added return here
     }
-})
+  });
+  
 
 
 

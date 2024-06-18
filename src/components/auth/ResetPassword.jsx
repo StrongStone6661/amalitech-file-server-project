@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ResetPassword.module.css';
 import axios from 'axios'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const ResetPassword = () => {
+  const navigate = useNavigate()
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [urlToken, setUrlToken] = useState('');
@@ -31,10 +32,10 @@ const ResetPassword = () => {
        const response = await axios.post(`http://localhost:3001/api/reset-password/${token}`, { password });
        Swal.fire(response.data.message)
       } else {
-        Swal.fire("Password do no match!!")
+       Swal.fire("Password do no match!!")
       }
     }catch(error){
-      console.error(error,'did not set ooo');
+      console.log(error)
     }
     
   };
@@ -62,8 +63,8 @@ const ResetPassword = () => {
             Reset Password
           </button>
         </form>
-        <a href="#" className={styles.goBack}>
-          Go back
+        <a className={styles.goBack} onClick={()=> navigate('/')}>
+          login
         </a>
       </div>
     </div>

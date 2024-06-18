@@ -9,7 +9,7 @@ const FileUploads = () => {
   const [file, setFile] = useState(null);
 
   const handleSubmit = async (e) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('admintoken');
     if(!token){
       Swal.fire({
         icon: 'error',

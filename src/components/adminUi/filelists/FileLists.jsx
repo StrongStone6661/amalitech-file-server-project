@@ -12,7 +12,7 @@ const FileList = ({files,fetchFiles}) => {
  const navigate = useNavigate()
 
   const handleDelete = async (id)=>{
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('admintoken')
     if (!token) {
       Swal.fire('Error', 'You are not authorized. Please login.', 'error');
       navigate('/admin-login');

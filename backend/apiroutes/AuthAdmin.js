@@ -50,7 +50,7 @@ router.post('/login', async (req, res) => {
 
         const match = await bcrypt.compare(rawPassword, admin.password);
         if (match) {
-            const token = jwt.sign({ id: admin._id, email: admin.email }, process.env.JWT_SECRET, { expiresIn: '4h' });
+            const token = jwt.sign({ id: admin._id, email: admin.email }, process.env.ADMIN_JWT_SECRET, { expiresIn: '4h' });
             res.status(200).json({ message: 'Signin Successful', token, admin });
         } else {
             return res.status(401).json({ msg: "Incorrect password" });

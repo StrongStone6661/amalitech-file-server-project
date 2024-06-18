@@ -22,9 +22,11 @@ const Forgotpassword = () => {
         }
         
     }catch(error){
-        console.log(error)
+        if(error.response.request.status === 400){
+          Swal.fire(error.response.data.message)
+        }
     }
-    console.log('Email submitted:', email);
+    
   };
 
   return (

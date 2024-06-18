@@ -1,6 +1,5 @@
 import React from 'react';
 import FileUpload from '../fileupload/FileUploads';
-import FileStats from '../filestats/FileStats';
 import FileList from '../filelists/FileLists'
 import styles from './AdminDashboard.module.css';
 import axios from 'axios';
@@ -13,7 +12,7 @@ const AdminDashboard = () => {
   const [files,setFiles] = useState([])
 
   const fetchFiles = async () => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('admintoken')
     if (!token) {
       Swal.fire('Error', 'You are not authorized. Please login.', 'error');
       navigate('/admin-login');
@@ -21,7 +20,7 @@ const AdminDashboard = () => {
     }
 
     try {
-      const response = await axios.get('http://localhost:3001/api/data/allfiles',{
+      const response = await axios.get('http://localhost:3001/api/data/allfilesuploaded',{
         headers:{
           Authorization: `Bearer ${token}`
         }

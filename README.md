@@ -29,8 +29,8 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/StrongStone6661/.git
-   cd amalitech-file-server-project/backend
+   git clone https://github.com/StrongStone6661/file-distribution-system.git
+   cd file-distribution-system/backend
    ```
 
 2. Install dependencies:
@@ -49,7 +49,7 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 
 1. Navigate to the `main` directory:
    ```sh
-   cd amalitech-file-server-project
+   cd file-distribution-system
    ```
 
 2. Install dependencies:

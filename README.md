@@ -1,4 +1,4 @@
-# Document Distribution Platform - Amalitech Project
+# Document Distribution Platform
 
 A Node.js and Express-based platform for distributing documents such as wedding cards, admission forms, and more. The platform allows users to sign up, log in, view and search for downloadable files, and send files via email. Admins can upload files and view statistics on downloads and email sends.
 
@@ -29,7 +29,7 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/StrongStone6661/amalitech-file-server-project.git
+   git clone https://github.com/StrongStone6661/.git
    cd amalitech-file-server-project/backend
    ```
 

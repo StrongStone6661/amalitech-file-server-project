@@ -110,7 +110,7 @@ router.post('/login', async (req, res) => {
                     const token = jwt.sign({ id: customer._id, email: customer.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
                     res.status(200).json({ message: 'Signin Successful', token });
                 }else{
-                    res.status(400).json({message:'Invalid Credentials,wrong password'})
+                    res.status(400).json({message:'Invalid Credentials'})
                 }
             }else{
                 res.status(400).json({message:'User is not verified,please verify your email'})

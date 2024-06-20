@@ -48,9 +48,6 @@ A Node.js and Express-based platform for distributing documents such as wedding 
 ### Frontend
 
 1. Navigate to the `main` directory:
-   ```sh
-   cd file-distribution-system
-   ```
 
 2. Install dependencies:
    ```sh

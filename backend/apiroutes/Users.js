@@ -62,13 +62,21 @@ router.get('/verify/:token',async (req,res)=>{
         //check if customer exist in the db with accurate assigned Vtoken and VtokenExpires
         const user = await Customers.findOne({
             verificationToken: req.params.token,
-            verificationTokenExpires: {$gt:Date.now()} //is the Vtoken greater than date now?
         })
 
         //check if user was found with the stated attributes.
         if(!user){
-            return res.status(400).send('Verification link is expired or incorrect')
+            return res.status(400).send('Verification link is incorrect.')
         }
+        
+        //check if VtokenExpires is still valid
+        if(user.verificationTokenExpires < Date.now()){
+          await Customers.findOneAndDelete({
+            verificationToken: req.params.token
+        });
+          return res.status(400).send('Verification link is expired. Re Register.');
+        }
+
 
         //resetting the Token and Expiry
         user.isVerified = true; //Set verify true
@@ -119,23 +127,25 @@ router.post('/forget-password', async (req, res) => {
       const token = crypto.randomBytes(8).toString('hex');
       const user = await Customers.findOne({ email });
   
+      //check if user exist
       if (!user) {
-        return res.status(400).json({ message: 'User does not exist in our database, make sure you register' }); // Added return here
+        return res.status(400).json({ message: 'User does not exist in our database, make sure you register' }); 
       }
   
+      //set the token and expiry
       user.forgotPasswordToken = token;
       user.forgotPasswordExpires = Date.now() + 3600000;
   
       await user.save()
         .then(() => {
           resetpassword(email, token);
-          res.status(200).json({ message: 'Please check your email for the reset link' }); // Added return here
+          res.status(200).json({ message: 'Please check your email for the reset link' }); 
         })
         .catch((err) => {
-          return res.status(400).json({ message: 'Something went wrong', err }); // Added return here
+          return res.status(400).json({ message: 'Something went wrong', err }); 
         });
     } catch (err) {
-      return res.status(400).json({ message: 'Something went wrong' }); // Added return here
+      return res.status(400).json({ message: 'Something went wrong' }); 
     }
   });
   
